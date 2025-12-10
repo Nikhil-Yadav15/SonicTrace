@@ -1,0 +1,59 @@
+# pyproject.toml
+
+[project]
+name = "sonicTrace"
+version = "0.1.0"
+description = "AI-powered speaker diarization with emotion detection"
+
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    # Core ML
+    "torch>=2.0.0",
+    "torchaudio>=2.0.0",
+    "transformers>=4.35.0",
+    "pyannote-audio>=3.1.0",
+    "openai-whisper>=20231117",
+    
+    # Audio processing
+    "librosa>=0.10.0",
+    "soundfile>=0.12.0",
+    "pydub>=0.25.0",
+    "scipy>=1.11.0",
+    
+    # VAD
+    "silero-vad>=4.0.0",
+    
+    # ML utilities
+    "scikit-learn>=1.3.0",
+    "numpy>=1.24.0",
+    
+    # UI
+    "streamlit>=1.30.0",
+    
+    # Visualization
+    "plotly>=5.18.0",
+    "matplotlib>=3.7.0",
+    "pandas>=2.0.0",
+    
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "tqdm>=4.66.0",
+    "huggingface-hub>=0.20.0",
+    
+    # System
+    "psutil>=5.9.0",
+    "huggingface-hub[cli]>=0.20.0",
+]
+
+[project.optional-dependencies]
+dev = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["core", "utils"]
+
+[tool.uv]
+dev-dependencies = []
