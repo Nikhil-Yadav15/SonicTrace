@@ -1,4 +1,4 @@
-# utils/model_manager.py (COMPLETE WINDOWS-COMPATIBLE VERSION)
+# utils/model_manager.py
 
 import os
 import json
