@@ -27,9 +27,8 @@ class AudioProcessor:
     def __init__(self):
         """Initialize audio processor"""
         self.sample_rate = Config.SAMPLE_RATE
-        
-        print("✅ Audio Processor initialized")
-        print(f"   All components loaded and ready")
+
+        print("✅ Audio Processor initialized (models load on first use)")
     
     def process(
         self,
@@ -105,13 +104,20 @@ class AudioProcessor:
             }
             if show_progress:
                 print("\n⏭️ STEP 3: Overlap Detection (Skipped)")
-        
-        # Step 4: Speaker Diarization
+
+        # Mark overlap state on every segment up front
+        for seg in overlap_results['single_speaker']:
+            seg['is_overlap'] = False
+        for seg in overlap_results['overlap']:
+            seg['is_overlap'] = True
+
+        # Step 4: Speaker Diarization (single-speaker segments only;
+        # overlap segments by definition contain multiple voices)
         if enable_diarization:
             if show_progress:
                 print("\n👥 STEP 4: Speaker Diarization")
                 print("-" * 70)
-            
+
             diarization_results = self._diarize_speakers(
                 audio_info,
                 overlap_results['single_speaker'],
@@ -125,20 +131,25 @@ class AudioProcessor:
             }
             if show_progress:
                 print("\n⏭️ STEP 4: Speaker Diarization (Skipped)")
-        
+
+        # From here on, process ALL segments (labeled + overlap) together so
+        # overlap regions also receive emotion labels and transcription.
+        all_segments = diarization_results['segments'] + overlap_results['overlap']
+        all_segments.sort(key=lambda x: x['start'])
+
         # Step 5: Emotion Recognition
         if enable_emotion:
             if show_progress:
                 print("\n🎭 STEP 5: Emotion Recognition")
                 print("-" * 70)
-            
+
             emotion_results = self._recognize_emotions(
                 audio_info,
-                diarization_results['segments'],
+                all_segments,
                 show_progress
             )
         else:
-            emotion_results = {'segments': diarization_results['segments']}
+            emotion_results = {'segments': all_segments}
             if show_progress:
                 print("\n⏭️ STEP 5: Emotion Recognition (Skipped)")
         
@@ -280,11 +291,11 @@ class AudioProcessor:
             n_speakers=n_speakers
         )
         
-        # Assign speaker labels
+        # Assign speaker labels ("1", "2", ... displayed as Speaker 1, Speaker 2)
         labeled_segments = speaker_clusterer.assign_speaker_labels(
             segments,
             labels,
-            label_format='letter'
+            label_format='number'
         )
         
         # Get statistics
@@ -365,21 +376,16 @@ class AudioProcessor:
         
         processing_time = time.time() - start_time
         
-        # Combine all segments (transcription has everything)
-        final_segments = transcription_results['segments']
-        
-        # Add overlap segments (mark them)
-        for seg in overlap_results['overlap']:
-            seg['is_overlap'] = True
-            seg['text'] = seg.get('text', '[OVERLAP]')
-        
-        all_segments = final_segments + overlap_results['overlap']
-        all_segments.sort(key=lambda x: x['start'])
-        
+        # Transcription output already contains every segment
+        # (single-speaker + overlap), fully annotated
+        all_segments = sorted(transcription_results['segments'], key=lambda x: x['start'])
+
         # Reindex
         for idx, seg in enumerate(all_segments):
             seg['id'] = idx
-        
+
+        n_overlap = sum(1 for seg in all_segments if seg.get('is_overlap'))
+
         results = {
             'metadata': {
                 'filename': audio_info['filename'],
@@ -392,8 +398,8 @@ class AudioProcessor:
             },
             'summary': {
                 'total_segments': len(all_segments),
-                'speech_segments': len(final_segments),
-                'overlap_segments': len(overlap_results['overlap']),
+                'speech_segments': len(all_segments) - n_overlap,
+                'overlap_segments': n_overlap,
                 'n_speakers': diarization_results.get('n_speakers', 0),
                 'total_words': transcription_results.get('statistics', {}).get('total_words', 0)
             },
@@ -421,11 +427,15 @@ class AudioProcessor:
                 'filename': audio_info['filename'],
                 'filepath': audio_info['path'],
                 'duration': audio_info['duration'],
+                'sample_rate': audio_info['sample_rate'],
+                'size_mb': audio_info['size_mb'],
                 'processing_time': time.time() - start_time,
                 'timestamp': datetime.now().isoformat()
             },
             'summary': {
                 'total_segments': 0,
+                'speech_segments': 0,
+                'overlap_segments': 0,
                 'n_speakers': 0,
                 'total_words': 0
             },
@@ -490,9 +500,9 @@ class AudioProcessor:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
         if format == 'json':
-            # Save full results as JSON
+            # Save full results as JSON (numpy types are not serializable)
             with open(output_path, 'w', encoding='utf-8') as f:
-                json.dump(results, f, indent=2, ensure_ascii=False)
+                json.dump(self._to_serializable(results), f, indent=2, ensure_ascii=False)
         
         elif format in ['txt', 'srt', 'vtt']:
             # Save transcription only
@@ -504,6 +514,23 @@ class AudioProcessor:
             raise ValueError(f"Unknown format: {format}")
         
         print(f"✅ Results saved to: {output_path}")
+
+    @classmethod
+    def _to_serializable(cls, obj):
+        """Recursively convert numpy types to native Python types"""
+        if isinstance(obj, dict):
+            return {k: cls._to_serializable(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple)):
+            return [cls._to_serializable(v) for v in obj]
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.bool_):
+            return bool(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return obj
 
 
 # Global instance

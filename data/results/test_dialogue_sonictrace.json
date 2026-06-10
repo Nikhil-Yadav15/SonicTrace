@@ -1,0 +1,809 @@
+{
+  "metadata": {
+    "filename": "test_dialogue.wav",
+    "filepath": "C:\\Users\\sachi\\Desktop\\SonicTrace\\data\\uploads\\test_dialogue.wav",
+    "duration": 55.5723125,
+    "sample_rate": 16000,
+    "size_mb": 1.695974349975586,
+    "processing_time": 174.75975155830383,
+    "timestamp": "2026-06-10T23:03:22.436701"
+  },
+  "summary": {
+    "total_segments": 15,
+    "speech_segments": 15,
+    "overlap_segments": 0,
+    "n_speakers": 2,
+    "total_words": 130
+  },
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.1,
+      "end": 1.4,
+      "duration": 1.2999999999999998,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5558046102523804,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.34146341463414637,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1052.1468732318494,
+          "spectral_contrast": 20.289580180673862,
+          "centroid_std": 309.48123022461454,
+          "rolloff": 1749.6189024390244
+        },
+        "energy": {
+          "rms_energy": 0.11566586792469025,
+          "energy_entropy": 0.0195073951035738,
+          "low_energy_ratio": 0.9972016215324402,
+          "mid_energy_ratio": 0.0027454758528620005,
+          "high_energy_ratio": 5.2872059313813224e-05
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "neutral",
+      "emotion_confidence": 0.45976507663726807,
+      "emotion_scores": {
+        "angry": 0.14916719496250153,
+        "calm": 0.0411209799349308,
+        "disgust": 0.014257041737437248,
+        "fearful": 0.011989354155957699,
+        "happy": 0.26726505160331726,
+        "neutral": 0.45976507663726807,
+        "sad": 0.013530603609979153,
+        "surprised": 0.042904727160930634
+      },
+      "text": "Good morning everyone.",
+      "transcription_confidence": 0.9870763029903173
+    },
+    {
+      "id": 1,
+      "start": 1.7,
+      "end": 3.5,
+      "duration": 1.8,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5828280448913574,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 7,
+          "multi_pitch_ratio": 0.49122807017543857,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1382.7406999016782,
+          "spectral_contrast": 20.385507536132113,
+          "centroid_std": 672.4496777377336,
+          "rolloff": 2762.061403508772
+        },
+        "energy": {
+          "rms_energy": 0.11539928615093231,
+          "energy_entropy": 0.07052665203809738,
+          "low_energy_ratio": 0.9876527786254883,
+          "mid_energy_ratio": 0.01111961156129837,
+          "high_energy_ratio": 0.0012276199413463473
+        },
+        "votes": 1,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "neutral",
+      "emotion_confidence": 0.7315318584442139,
+      "emotion_scores": {
+        "angry": 0.037774186581373215,
+        "calm": 0.06263872981071472,
+        "disgust": 0.006194436922669411,
+        "fearful": 0.007170321885496378,
+        "happy": 0.07733753323554993,
+        "neutral": 0.7315318584442139,
+        "sad": 0.0064558349549770355,
+        "surprised": 0.07089720666408539
+      },
+      "text": "Thank you for joining the call today.",
+      "transcription_confidence": 0.9968955228105187
+    },
+    {
+      "id": 2,
+      "start": 4.4,
+      "end": 8.4,
+      "duration": 4.0,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6358550190925598,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 7,
+          "multi_pitch_ratio": 0.42063492063492064,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1281.788150019185,
+          "spectral_contrast": 20.028767236296282,
+          "centroid_std": 1210.5978464935724,
+          "rolloff": 2742.001488095238
+        },
+        "energy": {
+          "rms_energy": 0.11095220595598221,
+          "energy_entropy": 0.1425570696592331,
+          "low_energy_ratio": 0.9713387489318848,
+          "mid_energy_ratio": 0.024136465042829514,
+          "high_energy_ratio": 0.0045247757807374
+        },
+        "votes": 1,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "happy",
+      "emotion_confidence": 0.27928805351257324,
+      "emotion_scores": {
+        "angry": 0.21991197764873505,
+        "calm": 0.07270520180463791,
+        "disgust": 0.08548811078071594,
+        "fearful": 0.015272132121026516,
+        "happy": 0.27928805351257324,
+        "neutral": 0.22867727279663086,
+        "sad": 0.03375536575913429,
+        "surprised": 0.0649019405245781
+      },
+      "text": "I want to walk through the quarterly results and our plans for the next release.",
+      "transcription_confidence": 0.9990172754041851
+    },
+    {
+      "id": 3,
+      "start": 9.9,
+      "end": 11.3,
+      "duration": 1.4000000000000004,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5892225503921509,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 3,
+          "multi_pitch_ratio": 0.06818181818181818,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1472.7010737242529,
+          "spectral_contrast": 21.558698695017096,
+          "centroid_std": 1144.3956887211214,
+          "rolloff": 3303.9772727272725
+        },
+        "energy": {
+          "rms_energy": 0.10671578347682953,
+          "energy_entropy": 0.3052244484424591,
+          "low_energy_ratio": 0.9220669865608215,
+          "mid_energy_ratio": 0.06703739613294601,
+          "high_energy_ratio": 0.010895575396716595
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.7427221536636353,
+      "emotion_scores": {
+        "angry": 0.02129054069519043,
+        "calm": 0.1337408572435379,
+        "disgust": 0.007292795926332474,
+        "fearful": 0.006495397072285414,
+        "happy": 0.05206417292356491,
+        "neutral": 0.7427221536636353,
+        "sad": 0.012537447735667229,
+        "surprised": 0.02385656163096428
+      },
+      "text": "Thanks for the introduction.",
+      "transcription_confidence": 0.9862337782979012
+    },
+    {
+      "id": 4,
+      "start": 12.1,
+      "end": 13.1,
+      "duration": 1.0,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.604997456073761,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 5,
+          "multi_pitch_ratio": 0.25,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1329.0717771803306,
+          "spectral_contrast": 20.863450447509212,
+          "centroid_std": 1255.6114398288535,
+          "rolloff": 3001.46484375
+        },
+        "energy": {
+          "rms_energy": 0.10778354853391647,
+          "energy_entropy": 0.08329129219055176,
+          "low_energy_ratio": 0.9860151410102844,
+          "mid_energy_ratio": 0.006903588306158781,
+          "high_energy_ratio": 0.007081262767314911
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.7367777824401855,
+      "emotion_scores": {
+        "angry": 0.03675011917948723,
+        "calm": 0.06414873152971268,
+        "disgust": 0.007292458787560463,
+        "fearful": 0.006447062361985445,
+        "happy": 0.09006407856941223,
+        "neutral": 0.7367777824401855,
+        "sad": 0.008531827479600906,
+        "surprised": 0.04998796433210373
+      },
+      "text": "before we start.",
+      "transcription_confidence": 0.9823084361851215
+    },
+    {
+      "id": 5,
+      "start": 13.4,
+      "end": 16.5,
+      "duration": 3.0999999999999996,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5885303020477295,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.10309278350515463,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1369.422241734017,
+          "spectral_contrast": 21.732707657162415,
+          "centroid_std": 1008.6419962384157,
+          "rolloff": 2874.7583762886597
+        },
+        "energy": {
+          "rms_energy": 0.10874906182289124,
+          "energy_entropy": 0.20059125125408173,
+          "low_energy_ratio": 0.9552999138832092,
+          "mid_energy_ratio": 0.03850500285625458,
+          "high_energy_ratio": 0.006195112131536007
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.6879714727401733,
+      "emotion_scores": {
+        "angry": 0.009918303228914738,
+        "calm": 0.2296024113893509,
+        "disgust": 0.005491798743605614,
+        "fearful": 0.004947409965097904,
+        "happy": 0.028983840718865395,
+        "neutral": 0.6879714727401733,
+        "sad": 0.012130893766880035,
+        "surprised": 0.02095392905175686
+      },
+      "text": "Could you share the latest numbers from the marketing campaign?",
+      "transcription_confidence": 0.9943765667267144
+    },
+    {
+      "id": 6,
+      "start": 17.2,
+      "end": 19.0,
+      "duration": 1.8000000000000007,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5805227756500244,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.08771929824561403,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1483.0083220492045,
+          "spectral_contrast": 22.214826753398615,
+          "centroid_std": 1130.152669046952,
+          "rolloff": 3243.0098684210525
+        },
+        "energy": {
+          "rms_energy": 0.11421254277229309,
+          "energy_entropy": 0.1081278845667839,
+          "low_energy_ratio": 0.9806166291236877,
+          "mid_energy_ratio": 0.01268108282238245,
+          "high_energy_ratio": 0.006702322047203779
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.5788705348968506,
+      "emotion_scores": {
+        "angry": 0.0060227434150874615,
+        "calm": 0.34639784693717957,
+        "disgust": 0.005015065427869558,
+        "fearful": 0.004235571715980768,
+        "happy": 0.024004444479942322,
+        "neutral": 0.5788705348968506,
+        "sad": 0.011807268485426903,
+        "surprised": 0.023646537214517593
+      },
+      "text": "I am really excited to see them.",
+      "transcription_confidence": 0.9940678072161973
+    },
+    {
+      "id": 7,
+      "start": 20.4,
+      "end": 21.2,
+      "duration": 0.8000000000000007,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6656764149665833,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 7,
+          "multi_pitch_ratio": 0.5769230769230769,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1379.2056683081892,
+          "spectral_contrast": 18.69164542036702,
+          "centroid_std": 1529.1570261123286,
+          "rolloff": 3513.5216346153848
+        },
+        "energy": {
+          "rms_energy": 0.09833520650863647,
+          "energy_entropy": 0.22281259298324585,
+          "low_energy_ratio": 0.9482671618461609,
+          "mid_energy_ratio": 0.045401737093925476,
+          "high_energy_ratio": 0.00633117463439703
+        },
+        "votes": 1,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "happy",
+      "emotion_confidence": 0.46940940618515015,
+      "emotion_scores": {
+        "angry": 0.4460350275039673,
+        "calm": 0.0028168740682303905,
+        "disgust": 0.015373432077467442,
+        "fearful": 0.015545940026640892,
+        "happy": 0.46940940618515015,
+        "neutral": 0.012868822552263737,
+        "sad": 0.0059055304154753685,
+        "surprised": 0.032044921070337296
+      },
+      "text": "Of course.",
+      "transcription_confidence": 0.9904952738434076
+    },
+    {
+      "id": 8,
+      "start": 22.0,
+      "end": 28.1,
+      "duration": 6.100000000000001,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6354535818099976,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 6,
+          "multi_pitch_ratio": 0.4031413612565445,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1250.7147797165428,
+          "spectral_contrast": 19.600670755186787,
+          "centroid_std": 1081.6534802405336,
+          "rolloff": 2573.2166230366493
+        },
+        "energy": {
+          "rms_energy": 0.10820350050926208,
+          "energy_entropy": 0.1825156956911087,
+          "low_energy_ratio": 0.9619535207748413,
+          "mid_energy_ratio": 0.029032744467258453,
+          "high_energy_ratio": 0.009013768285512924
+        },
+        "votes": 1,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "happy",
+      "emotion_confidence": 0.38256117701530457,
+      "emotion_scores": {
+        "angry": 0.30392172932624817,
+        "calm": 0.031265582889318466,
+        "disgust": 0.038358014076948166,
+        "fearful": 0.016555892303586006,
+        "happy": 0.38256117701530457,
+        "neutral": 0.14441561698913574,
+        "sad": 0.01676597259938717,
+        "surprised": 0.06615599989891052
+      },
+      "text": "The campaign reached over 2 million people, and sign-up screw by 40% compared to last quarter.",
+      "transcription_confidence": 0.9993604680639692
+    },
+    {
+      "id": 9,
+      "start": 29.6,
+      "end": 30.9,
+      "duration": 1.2999999999999972,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5860711932182312,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.12195121951219512,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1413.7581593073605,
+          "spectral_contrast": 22.855797598762944,
+          "centroid_std": 1478.5028448489534,
+          "rolloff": 3170.5411585365855
+        },
+        "energy": {
+          "rms_energy": 0.12386352568864822,
+          "energy_entropy": 0.10931704938411713,
+          "low_energy_ratio": 0.9803480505943298,
+          "mid_energy_ratio": 0.006738970521837473,
+          "high_energy_ratio": 0.012913083657622337
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.6193690896034241,
+      "emotion_scores": {
+        "angry": 0.004940739832818508,
+        "calm": 0.31933486461639404,
+        "disgust": 0.0034905443899333477,
+        "fearful": 0.003882127348333597,
+        "happy": 0.02483394183218479,
+        "neutral": 0.6193690896034241,
+        "sad": 0.014812706038355827,
+        "surprised": 0.009335997514426708
+      },
+      "text": "That is wonderful news.",
+      "transcription_confidence": 0.9860906498506665
+    },
+    {
+      "id": 10,
+      "start": 31.7,
+      "end": 36.4,
+      "duration": 4.699999999999999,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.5874593257904053,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 5,
+          "multi_pitch_ratio": 0.11564625850340136,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1279.2928250259313,
+          "spectral_contrast": 21.74096963221549,
+          "centroid_std": 1120.6414582818552,
+          "rolloff": 2802.295918367347
+        },
+        "energy": {
+          "rms_energy": 0.10598227381706238,
+          "energy_entropy": 0.14926548302173615,
+          "low_energy_ratio": 0.9697263240814209,
+          "mid_energy_ratio": 0.025269554927945137,
+          "high_energy_ratio": 0.0050041466020047665
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.574795126914978,
+      "emotion_scores": {
+        "angry": 0.07298804074525833,
+        "calm": 0.08801010251045227,
+        "disgust": 0.0161980539560318,
+        "fearful": 0.01017635315656662,
+        "happy": 0.16470761597156525,
+        "neutral": 0.574795126914978,
+        "sad": 0.015102483332157135,
+        "surprised": 0.05802219361066818
+      },
+      "text": "The team worked very hard on this, and I am proud of what we have accomplished together.",
+      "transcription_confidence": 0.9989372376585379
+    },
+    {
+      "id": 11,
+      "start": 37.9,
+      "end": 38.7,
+      "duration": 0.8000000000000043,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6320514678955078,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.34615384615384615,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1370.0816782149252,
+          "spectral_contrast": 20.24123840141965,
+          "centroid_std": 1096.33141318293,
+          "rolloff": 2862.6802884615386
+        },
+        "energy": {
+          "rms_energy": 0.09105347096920013,
+          "energy_entropy": 0.2777804434299469,
+          "low_energy_ratio": 0.9330753087997437,
+          "mid_energy_ratio": 0.05446231737732887,
+          "high_energy_ratio": 0.012462414801120758
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "neutral",
+      "emotion_confidence": 0.2978481948375702,
+      "emotion_scores": {
+        "angry": 0.0936366617679596,
+        "calm": 0.18392756581306458,
+        "disgust": 0.05282140523195267,
+        "fearful": 0.02262958511710167,
+        "happy": 0.23309017717838287,
+        "neutral": 0.2978481948375702,
+        "sad": 0.05858425796031952,
+        "surprised": 0.057462114840745926
+      },
+      "text": "Absolutely.",
+      "transcription_confidence": 0.987223768606782
+    },
+    {
+      "id": 12,
+      "start": 39.5,
+      "end": 45.6,
+      "duration": 6.100000000000001,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6394166946411133,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 7,
+          "multi_pitch_ratio": 0.44502617801047123,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1248.27516482208,
+          "spectral_contrast": 19.373920237658066,
+          "centroid_std": 868.8678896611952,
+          "rolloff": 2444.2899214659687
+        },
+        "energy": {
+          "rms_energy": 0.10453726351261139,
+          "energy_entropy": 0.13687574863433838,
+          "low_energy_ratio": 0.9720636010169983,
+          "mid_energy_ratio": 0.025004444643855095,
+          "high_energy_ratio": 0.0029319373425096273
+        },
+        "votes": 1,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "2",
+      "speaker_id": 1,
+      "emotion": "happy",
+      "emotion_confidence": 0.40355464816093445,
+      "emotion_scores": {
+        "angry": 0.36719566583633423,
+        "calm": 0.016191653907299042,
+        "disgust": 0.03469808027148247,
+        "fearful": 0.013384601101279259,
+        "happy": 0.40355464816093445,
+        "neutral": 0.07788794487714767,
+        "sad": 0.010875762440264225,
+        "surprised": 0.07621179521083832
+      },
+      "text": "Now, moving on to the product roadmap, we plan to ship the new dashboard by the end of next month.",
+      "transcription_confidence": 0.9993827148573473
+    },
+    {
+      "id": 13,
+      "start": 47.1,
+      "end": 47.6,
+      "duration": 0.5,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.6173758506774902,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 7,
+          "multi_pitch_ratio": 0.3125,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1394.3783102147531,
+          "spectral_contrast": 21.15320983203845,
+          "centroid_std": 1057.8461734255409,
+          "rolloff": 3292.96875
+        },
+        "energy": {
+          "rms_energy": 0.09842928498983383,
+          "energy_entropy": 0.12293105572462082,
+          "low_energy_ratio": 0.974367618560791,
+          "mid_energy_ratio": 0.02478708326816559,
+          "high_energy_ratio": 0.0008453435730189085
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "calm",
+      "emotion_confidence": 0.6719569563865662,
+      "emotion_scores": {
+        "angry": 0.003128614043816924,
+        "calm": 0.6719569563865662,
+        "disgust": 0.017564930021762848,
+        "fearful": 0.003876921720802784,
+        "happy": 0.010936230421066284,
+        "neutral": 0.11548686772584915,
+        "sad": 0.17648354172706604,
+        "surprised": 0.0005659504677169025
+      },
+      "text": "great.",
+      "transcription_confidence": 0.9526149109005928
+    },
+    {
+      "id": 14,
+      "start": 48.4,
+      "end": 54.2,
+      "duration": 5.800000000000004,
+      "confidence": 1.0,
+      "overlap_detected": false,
+      "overlap_confidence": 0.601017415523529,
+      "overlap_metadata": {
+        "pitch": {
+          "max_simultaneous_pitches": 4,
+          "multi_pitch_ratio": 0.14835164835164835,
+          "threshold": 2
+        },
+        "spectral": {
+          "bandwidth": 1381.232584466534,
+          "spectral_contrast": 21.471445355873676,
+          "centroid_std": 1196.7490082656823,
+          "rolloff": 3111.0061813186812
+        },
+        "energy": {
+          "rms_energy": 0.1064421534538269,
+          "energy_entropy": 0.28801918029785156,
+          "low_energy_ratio": 0.9277040362358093,
+          "mid_energy_ratio": 0.06260700523853302,
+          "high_energy_ratio": 0.00968897808343172
+        },
+        "votes": 0,
+        "method": "combined"
+      },
+      "is_overlap": false,
+      "speaker": "1",
+      "speaker_id": 0,
+      "emotion": "neutral",
+      "emotion_confidence": 0.32847821712493896,
+      "emotion_scores": {
+        "angry": 0.1417049914598465,
+        "calm": 0.0837397351861,
+        "disgust": 0.03225427120923996,
+        "fearful": 0.01741245947778225,
+        "happy": 0.2850993275642395,
+        "neutral": 0.32847821712493896,
+        "sad": 0.021807176992297173,
+        "surprised": 0.08950376510620117
+      },
+      "text": "I will make sure the documentation is ready before the launch, and we can schedule a demo for the customers.",
+      "transcription_confidence": 0.9991755638620816
+    }
+  ],
+  "statistics": {
+    "vad": {
+      "total_segments": 15,
+      "total_speech_duration": 40.50000000000001,
+      "avg_segment_duration": 2.7000000000000006,
+      "min_segment_duration": 0.5,
+      "max_segment_duration": 6.100000000000001,
+      "median_segment_duration": 1.8
+    },
+    "overlap": {
+      "total_overlaps": 0,
+      "total_overlap_duration": 0.0,
+      "avg_overlap_duration": 0.0,
+      "avg_confidence": 0.0
+    },
+    "speakers": {
+      "total_speakers": 2,
+      "speakers": {
+        "2": {
+          "segments": 7,
+          "total_duration": 20.900000000000006,
+          "avg_duration": 2.9857142857142867,
+          "percentage": 51.60493827160494
+        },
+        "1": {
+          "segments": 8,
+          "total_duration": 19.6,
+          "avg_duration": 2.45,
+          "percentage": 48.395061728395056
+        }
+      },
+      "total_duration": 40.50000000000001
+    },
+    "emotions": {
+      "total_segments": 15,
+      "total_duration": 40.500000000000014,
+      "emotions": {
+        "neutral": {
+          "count": 10,
+          "percentage": 66.66666666666666,
+          "duration": 23.000000000000007,
+          "duration_percentage": 56.79012345679012,
+          "avg_confidence": 0.5758129507303238
+        },
+        "happy": {
+          "count": 4,
+          "percentage": 26.666666666666668,
+          "duration": 17.000000000000004,
+          "duration_percentage": 41.9753086419753,
+          "avg_confidence": 0.3837033212184906
+        },
+        "calm": {
+          "count": 1,
+          "percentage": 6.666666666666667,
+          "duration": 0.5,
+          "duration_percentage": 1.2345679012345674,
+          "avg_confidence": 0.6719569563865662
+        }
+      }
+    },
+    "transcription": {
+      "total_segments": 15,
+      "transcribed_segments": 15,
+      "empty_segments": 0,
+      "total_words": 130,
+      "avg_words_per_segment": 8.666666666666666,
+      "avg_confidence": 0.9902170851516227
+    }
+  }
+}

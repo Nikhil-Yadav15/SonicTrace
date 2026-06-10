@@ -120,35 +120,63 @@ class OverlapDetector:
                 fmax=400,  # Maximum fundamental frequency (high female voice)
                 threshold=0.1
             )
-            
-            # Count simultaneous pitches at each time frame
-            max_simultaneous = 0
+
+            # piptrack returns several candidates per frame even for one
+            # voice (harmonics of a single F0 fall inside 50-400 Hz). A
+            # frame only counts as multi-pitch if it has two strong
+            # candidates that are well separated AND not harmonically
+            # related (a second speaker's F0 is rarely a multiple of the
+            # first speaker's).
             total_frames = pitches.shape[1]
             multi_pitch_frames = 0
-            
+            max_simultaneous = 0
+
             for time_idx in range(total_frames):
-                # Count active pitches in this frame
-                active_pitches = np.sum(magnitudes[:, time_idx] > 0.1)
-                max_simultaneous = max(max_simultaneous, active_pitches)
-                
-                if active_pitches >= 2:
+                frame_mags = magnitudes[:, time_idx]
+                peak = frame_mags.max()
+                if peak <= 0:
+                    continue
+
+                strong = frame_mags > 0.4 * peak
+                frame_pitches = np.sort(pitches[strong, time_idx])
+                frame_pitches = frame_pitches[frame_pitches > 0]
+
+                # Merge candidates closer than 30 Hz (same pitch, adjacent bins)
+                distinct = []
+                for p in frame_pitches:
+                    if not distinct or p - distinct[-1] > 30:
+                        distinct.append(p)
+
+                # Drop candidates that are harmonics of a lower candidate
+                fundamentals = []
+                for p in distinct:
+                    is_harmonic = any(
+                        abs(p / f - round(p / f)) < 0.08
+                        for f in fundamentals
+                    )
+                    if not is_harmonic:
+                        fundamentals.append(p)
+
+                max_simultaneous = max(max_simultaneous, len(fundamentals))
+                if len(fundamentals) >= self.pitch_threshold:
                     multi_pitch_frames += 1
-            
-            # Calculate percentage of frames with multiple pitches
+
+            # Calculate percentage of frames with multiple distinct pitches
             multi_pitch_ratio = multi_pitch_frames / max(total_frames, 1)
-            
-            # Decision: overlap if multiple pitches detected frequently
-            is_overlap = max_simultaneous >= self.pitch_threshold
-            
+
+            # Decision: overlap only if concurrent independent pitches are
+            # sustained, not just present in a stray frame
+            is_overlap = multi_pitch_ratio > 0.35
+
             # Confidence based on consistency
             confidence = min(0.9, 0.5 + multi_pitch_ratio * 0.4)
-            
+
             metadata = {
                 'max_simultaneous_pitches': int(max_simultaneous),
                 'multi_pitch_ratio': float(multi_pitch_ratio),
                 'threshold': self.pitch_threshold
             }
-            
+
             return is_overlap, confidence, metadata
             
         except Exception as e:
@@ -185,27 +213,22 @@ class OverlapDetector:
             rolloff = librosa.feature.spectral_rolloff(y=audio, sr=sr)
             mean_rolloff = np.mean(rolloff)
             
-            # Decision logic:
-            # Overlap typically has:
-            # - Wider bandwidth (>3500 Hz) ← INCREASED from 2000
-            # - Higher spectral variation
-            # - More complex spectral structure
-            
-            is_overlap = False
+            # Decision logic: overlapping speech tends to have BOTH a wide
+            # bandwidth AND high spectral variation. Either condition alone
+            # is common in normal single-speaker speech, so require both.
+            wide_bandwidth = mean_bandwidth > 3500
+            high_variation = std_centroid > 700
+
+            is_overlap = wide_bandwidth and high_variation
+
             confidence = 0.5
-            
-            # More conservative thresholds
-            if mean_bandwidth > 3500:  # ← CHANGED from 2000
-                is_overlap = True
-                confidence += 0.2
-            
-            if std_centroid > 500:  # ← CHANGED from 300
-                is_overlap = True
+            if wide_bandwidth:
                 confidence += 0.15
-            
-            if mean_contrast > 30:  # ← CHANGED from 25
+            if high_variation:
+                confidence += 0.15
+            if mean_contrast > 30:
                 confidence += 0.1
-            
+
             confidence = min(0.9, confidence)
             
             metadata = {
@@ -249,11 +272,12 @@ class OverlapDetector:
             total_energy = low_energy + mid_energy + high_energy
             
             # Energy distribution (entropy-like measure)
+            low_ratio = mid_ratio = high_ratio = 0.0
             if total_energy > 0:
                 low_ratio = low_energy / total_energy
                 mid_ratio = mid_energy / total_energy
                 high_ratio = high_energy / total_energy
-                
+
                 # Calculate energy entropy
                 # More distributed energy suggests overlap
                 ratios = [low_ratio, mid_ratio, high_ratio]
@@ -273,9 +297,9 @@ class OverlapDetector:
             metadata = {
                 'rms_energy': float(rms),
                 'energy_entropy': float(energy_entropy),
-                'low_energy_ratio': float(low_ratio) if total_energy > 0 else 0,
-                'mid_energy_ratio': float(mid_ratio) if total_energy > 0 else 0,
-                'high_energy_ratio': float(high_ratio) if total_energy > 0 else 0
+                'low_energy_ratio': float(low_ratio),
+                'mid_energy_ratio': float(mid_ratio),
+                'high_energy_ratio': float(high_ratio)
             }
             
             return is_overlap, confidence, metadata

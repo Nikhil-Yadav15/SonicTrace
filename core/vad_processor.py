@@ -16,47 +16,47 @@ class VADProcessor:
     """Voice Activity Detection processor using Silero VAD"""
     
     def __init__(self):
-        """Initialize Silero VAD model"""
+        """Initialize Silero VAD processor (model loads lazily on first use)"""
         self.model = None
-        self.utils = None
+        self.get_speech_timestamps = None
         self.sample_rate = 16000  # Silero VAD expects 16kHz
-        self.device = Config.get_device()
-        
-        self._load_model()
-    
-    def _load_model(self):
-        """Load Silero VAD model"""
+        # Silero VAD is tiny and its helpers pass CPU tensors; keep it on CPU
+        # to avoid device mismatches when CUDA is available.
+        self.device = torch.device('cpu')
+
+    def _ensure_loaded(self):
+        """Load Silero VAD model on first use"""
+        if self.model is not None:
+            return
+
         print("Loading Silero VAD model...")
         start_time = time.time()
-        
+
+        # Preferred: silero-vad pip package (bundled weights, works offline)
         try:
-            # Load from torch hub
-            model, utils = torch.hub.load(
-                repo_or_dir='snakers4/silero-vad',
-                model='silero_vad',
-                force_reload=False,
-                onnx=False
-            )
-            
-            # Move to device
-            model.to(self.device)
-            model.eval()
-            
-            self.model = model
-            self.utils = utils
-            
-            # Extract utility functions
-            (self.get_speech_timestamps,
-             self.save_audio,
-             self.read_audio,
-             self.VADIterator,
-             self.collect_chunks) = utils
-            
-            elapsed = time.time() - start_time
-            print(f"✅ Silero VAD loaded in {elapsed:.2f}s on {self.device}")
-            
-        except Exception as e:
-            raise RuntimeError(f"Failed to load Silero VAD: {e}")
+            from silero_vad import load_silero_vad, get_speech_timestamps
+            self.model = load_silero_vad(onnx=False)
+            self.get_speech_timestamps = get_speech_timestamps
+        except Exception:
+            # Fallback: torch hub (needs internet on first run)
+            try:
+                model, utils = torch.hub.load(
+                    repo_or_dir='snakers4/silero-vad',
+                    model='silero_vad',
+                    force_reload=False,
+                    onnx=False,
+                    trust_repo=True
+                )
+                self.model = model
+                self.get_speech_timestamps = utils[0]
+            except Exception as e:
+                raise RuntimeError(f"Failed to load Silero VAD: {e}")
+
+        self.model.to(self.device)
+        self.model.eval()
+
+        elapsed = time.time() - start_time
+        print(f"✅ Silero VAD loaded in {elapsed:.2f}s on {self.device}")
     
     def detect_speech(
         self,
@@ -82,6 +82,8 @@ class VADProcessor:
             List of speech segments with metadata
         """
         
+        self._ensure_loaded()
+
         # Use config defaults if not specified
         if min_speech_duration_ms is None:
             min_speech_duration_ms = Config.VAD_MIN_SPEECH_DURATION_MS

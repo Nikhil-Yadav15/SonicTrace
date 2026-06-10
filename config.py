@@ -1,8 +1,18 @@
 # config.py
 
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
+
+# Windows consoles often default to cp1252, which cannot print the unicode
+# status symbols used throughout the pipeline. Force UTF-8 output so logging
+# never crashes processing.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding='utf-8', errors='replace')
+    except (AttributeError, ValueError):
+        pass
 
 # Load environment variables
 load_dotenv()
@@ -29,9 +39,6 @@ class Config:
     DEVICE = os.getenv("DEVICE", "auto")  # auto, cpu, cuda
     NUM_WORKERS = max(1, os.cpu_count() - 1) if os.cpu_count() else 4
     
-    # ===== Model Settings =====
-    WHISPER_MODEL_SIZE = "small"  # tiny, base, small, medium, large
-    
     # ===== VAD Settings =====
     VAD_MIN_SPEECH_DURATION_MS = 500  # Minimum speech segment (500ms)
     VAD_MIN_SILENCE_DURATION_MS = 300  # Minimum silence between segments (300ms)
@@ -49,10 +56,12 @@ class Config:
     OVERLAP_DETECTION_METHOD = 'auto'  # 'auto', 'spectral', 'pitch', 'energy'
     
     # ===== Speaker Clustering Settings =====
-    MIN_SPEAKERS = 2
+    MIN_SPEAKERS = 1
     MAX_SPEAKERS = 10
-    CLUSTERING_METHOD = 'agglomerative'  # 'agglomerative' or 'dbscan'
+    CLUSTERING_METHOD = 'agglomerative'  # 'agglomerative', 'kmeans' or 'dbscan'
     CLUSTERING_MIN_SIMILARITY = 0.7
+    # Median pairwise cosine distance below this -> treat as single speaker
+    SINGLE_SPEAKER_DISTANCE_THRESHOLD = 0.18
     
     # ===== Emotion Recognition Settings =====
     EMOTION_MIN_CONFIDENCE = 0.3  # Minimum confidence to trust emotion
@@ -68,11 +77,10 @@ class Config:
     ENABLE_SPEAKER_DIARIZATION = True
     ENABLE_EMOTION_RECOGNITION = True
     ENABLE_TRANSCRIPTION = True
-    
+
     # Output
     DEFAULT_OUTPUT_FORMAT = 'json'
-    RESULTS_DIR = BASE_DIR / 'data' / 'results'
-    
+
     # ===== HuggingFace =====
     HF_TOKEN = os.getenv("HF_TOKEN", None)
     

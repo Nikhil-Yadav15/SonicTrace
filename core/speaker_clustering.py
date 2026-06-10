@@ -6,8 +6,9 @@ Auto-detects number of speakers and assigns labels
 """
 
 import numpy as np
-from sklearn.cluster import AgglomerativeClustering, DBSCAN
+from sklearn.cluster import AgglomerativeClustering, DBSCAN, KMeans
 from sklearn.metrics import silhouette_score
+from sklearn.metrics.pairwise import cosine_distances
 from typing import List, Dict, Tuple, Optional
 from config import Config
 
@@ -41,24 +42,38 @@ class SpeakerClusterer:
         """
         min_spk = min_speakers or self.min_speakers
         max_spk = max_speakers or self.max_speakers
-        
+
         n_segments = len(embeddings)
-        
+
         # Ensure max speakers doesn't exceed segments
         max_spk = min(max_spk, n_segments)
-        
+
         if n_segments < 2:
             return 1
-        
+
         # Convert embeddings to array
         X = np.array(embeddings)
-        
+
+        # Single-speaker check: if all segments sound alike (small pairwise
+        # cosine distances), don't force a split into multiple clusters.
+        distances = cosine_distances(X)
+        median_distance = float(np.median(distances[np.triu_indices(n_segments, k=1)]))
+        if median_distance < Config.SINGLE_SPEAKER_DISTANCE_THRESHOLD:
+            print(f"\n🔍 Segments are highly similar "
+                  f"(median cosine distance {median_distance:.3f}) → 1 speaker")
+            return 1
+
         # Try different numbers of speakers
+        # (silhouette needs 2 <= k <= n_segments - 1)
+        min_spk = max(2, min_spk)
+        max_spk = min(max_spk, n_segments - 1)
+        if max_spk < min_spk:
+            return min(min_spk, n_segments)
         best_n_speakers = min_spk
         best_score = -1
-        
+
         print(f"\n🔍 Auto-detecting number of speakers ({min_spk}-{max_spk})...")
-        
+
         for n_speakers in range(min_spk, max_spk + 1):
             try:
                 # Cluster
@@ -107,22 +122,30 @@ class SpeakerClusterer:
             Array of speaker labels (0, 1, 2, ...)
         """
         method = method or self.clustering_method
-        
+
         # Convert to array
         X = np.array(embeddings)
-        
+
         if len(X) == 0:
             return np.array([])
-        
+
         # Auto-detect number of speakers if not specified
         if n_speakers is None:
             n_speakers = self.auto_detect_speakers(embeddings)
-        
+
+        n_speakers = min(n_speakers, len(X))
+
+        if n_speakers <= 1:
+            print(f"\n👥 Single speaker detected — all {len(X)} segments assigned to Speaker 1")
+            return np.zeros(len(X), dtype=int)
+
         print(f"\n👥 Clustering {len(embeddings)} segments into {n_speakers} speakers...")
-        
+
         # Cluster using specified method
         if method == 'agglomerative':
             labels = self._cluster_agglomerative(X, n_speakers)
+        elif method == 'kmeans':
+            labels = self._cluster_kmeans(X, n_speakers)
         elif method == 'dbscan':
             labels = self._cluster_dbscan(X)
         else:
@@ -155,9 +178,27 @@ class SpeakerClusterer:
         
         return labels
     
+    def _cluster_kmeans(self, X: np.ndarray, n_speakers: int) -> np.ndarray:
+        """KMeans clustering on length-normalized embeddings.
+
+        Normalizing to unit length makes euclidean KMeans approximate
+        cosine-distance clustering (spherical k-means).
+        """
+        norms = np.linalg.norm(X, axis=1, keepdims=True)
+        norms[norms == 0] = 1.0
+        X_normed = X / norms
+
+        clustering = KMeans(
+            n_clusters=n_speakers,
+            n_init=10,
+            random_state=42
+        )
+
+        return clustering.fit_predict(X_normed)
+
     def _cluster_dbscan(self, X: np.ndarray) -> np.ndarray:
         """DBSCAN clustering (density-based)"""
-        
+
         # DBSCAN with cosine distance
         # eps is the maximum distance between samples
         clustering = DBSCAN(
@@ -165,13 +206,22 @@ class SpeakerClusterer:
             min_samples=2,
             metric='cosine'
         )
-        
+
         labels = clustering.fit_predict(X)
-        
-        # DBSCAN uses -1 for noise, remap to positive integers
-        if -1 in labels:
-            labels = labels + 1
-        
+
+        # DBSCAN marks outliers as -1; assign each to the nearest cluster
+        # centroid instead of lumping them into a fake shared speaker.
+        noise_mask = labels == -1
+        if noise_mask.any():
+            cluster_ids = np.unique(labels[~noise_mask])
+            if len(cluster_ids) == 0:
+                return np.zeros(len(X), dtype=int)
+
+            centroids = np.array([X[labels == cid].mean(axis=0) for cid in cluster_ids])
+            for idx in np.where(noise_mask)[0]:
+                dists = cosine_distances(X[idx:idx + 1], centroids)[0]
+                labels[idx] = cluster_ids[int(np.argmin(dists))]
+
         return labels
     
     def assign_speaker_labels(
@@ -186,27 +236,27 @@ class SpeakerClusterer:
         Args:
             segments: List of segment dictionaries
             cluster_labels: Cluster labels from clustering
-            label_format: 'letter' (A, B, C) or 'number' (0, 1, 2)
-        
+            label_format: 'letter' (A, B, C) or 'number' (1, 2, 3)
+
         Returns:
             Segments with speaker labels added
         """
         labeled_segments = []
-        
+
         for segment, label in zip(segments, cluster_labels):
             seg = segment.copy()
-            
+
             # Convert label to desired format
             if label_format == 'letter':
                 speaker_label = chr(65 + int(label))  # 65 = 'A'
             else:
-                speaker_label = str(label)
-            
+                speaker_label = str(int(label) + 1)  # "Speaker 1, Speaker 2, ..."
+
             seg['speaker'] = speaker_label
             seg['speaker_id'] = int(label)
-            
+
             labeled_segments.append(seg)
-        
+
         return labeled_segments
     
     def get_speaker_statistics(

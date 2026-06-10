@@ -1,0 +1,15 @@
+[00:00 -> 00:01] Speaker 2: (neutral) Good morning everyone.
+[00:01 -> 00:03] Speaker 2: (neutral) Thank you for joining the call today.
+[00:04 -> 00:08] Speaker 2: (happy) I want to walk through the quarterly results and our plans for the next release.
+[00:09 -> 00:11] Speaker 1: (neutral) Thanks for the introduction.
+[00:12 -> 00:13] Speaker 1: (neutral) before we start.
+[00:13 -> 00:16] Speaker 1: (neutral) Could you share the latest numbers from the marketing campaign?
+[00:17 -> 00:19] Speaker 1: (neutral) I am really excited to see them.
+[00:20 -> 00:21] Speaker 2: (happy) Of course.
+[00:22 -> 00:28] Speaker 2: (happy) The campaign reached over 2 million people, and sign-up screw by 40% compared to last quarter.
+[00:29 -> 00:30] Speaker 1: (neutral) That is wonderful news.
+[00:31 -> 00:36] Speaker 1: (neutral) The team worked very hard on this, and I am proud of what we have accomplished together.
+[00:37 -> 00:38] Speaker 2: (neutral) Absolutely.
+[00:39 -> 00:45] Speaker 2: (happy) Now, moving on to the product roadmap, we plan to ship the new dashboard by the end of next month.
+[00:47 -> 00:47] Speaker 1: (calm) great.
+[00:48 -> 00:54] Speaker 1: (neutral) I will make sure the documentation is ready before the launch, and we can schedule a demo for the customers.

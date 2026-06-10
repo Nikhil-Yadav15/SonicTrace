@@ -44,18 +44,25 @@ sudo apt-get install ffmpeg
 
 3. **Install Python dependencies**
 ```bash
+# With uv (recommended - uses the lock file)
+uv sync
+
+# Or with pip
 pip install -e .
 ```
 
-4. **Set up models**
+4. **Set up models** (optional — models also download automatically on first run)
 ```bash
 python setup_models.py
 ```
 
-This will download:
+Models used:
 - Whisper speech recognition model (small)
-- PyAnnote speaker embedding model
-- Wav2Vec2 emotion recognition model
+- PyAnnote speaker embedding model — falls back to the public
+  `pyannote/wespeaker-voxceleb-resnet34-LM` model automatically if the gated
+  `pyannote/embedding` model is unavailable (no HF token required)
+- Wav2Vec2 emotion recognition model (RAVDESS: angry, calm, disgust, fearful,
+  happy, neutral, sad, surprised)
 
 5. **Create environment file** (optional)
 ```bash
@@ -100,11 +107,18 @@ results = audio_processor.process(
 )
 
 # Access results
-print(f"Detected {results['num_speakers']} speakers")
+print(f"Detected {results['summary']['n_speakers']} speakers")
 for segment in results['segments']:
     print(f"[{segment['start']:.2f}s - {segment['end']:.2f}s] "
-          f"Speaker {segment['speaker']}: {segment['text']} "
-          f"(Emotion: {segment['emotion']})")
+          f"Speaker {segment.get('speaker', '?')}: {segment.get('text', '')} "
+          f"(Emotion: {segment.get('emotion', 'n/a')})")
+```
+
+Or use the CLI directly:
+
+```bash
+python main.py path/to/audio.wav --formats json srt txt
+python main.py audio.mp3 --speakers 3 --no-emotion
 ```
 
 ## 📁 Project Structure
@@ -193,33 +207,38 @@ The analysis returns a structured JSON with:
 
 ```json
 {
-  "audio_file": "path/to/audio.mp3",
-  "duration": 120.5,
-  "num_speakers": 3,
+  "metadata": {
+    "filename": "audio.mp3",
+    "duration": 120.5,
+    "processing_time": 64.2
+  },
+  "summary": {
+    "total_segments": 42,
+    "overlap_segments": 3,
+    "n_speakers": 3,
+    "total_words": 815
+  },
   "segments": [
     {
+      "id": 0,
       "start": 0.5,
       "end": 3.2,
-      "speaker": 0,
+      "duration": 2.7,
+      "speaker": "1",
       "text": "Hello, how are you?",
       "emotion": "happy",
-      "emotion_scores": {
-        "happy": 0.85,
-        "neutral": 0.10,
-        "sad": 0.05
-      },
+      "emotion_confidence": 0.85,
+      "emotion_scores": {"happy": 0.85, "neutral": 0.10, "sad": 0.05},
       "is_overlap": false
     }
   ],
-  "speakers": {
-    "0": {
-      "total_duration": 45.2,
-      "segments": 23,
-      "emotions": {...}
-    }
-  },
-  "overlaps": [...],
-  "statistics": {...}
+  "statistics": {
+    "vad": {},
+    "overlap": {},
+    "speakers": {},
+    "emotions": {},
+    "transcription": {}
+  }
 }
 ```
 

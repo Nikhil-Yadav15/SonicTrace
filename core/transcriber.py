@@ -17,16 +17,17 @@ class Transcriber:
     """Transcribe speech to text using Whisper"""
     
     def __init__(self):
-        """Initialize Whisper model"""
+        """Initialize transcriber (Whisper loads lazily on first use)"""
         self.model = None
         self.device = Config.get_device()
         self.model_size = Config.WHISPER_MODEL_SIZE
-        self.language = 'en'  # English only
-        
-        self._load_model()
-    
-    def _load_model(self):
-        """Load Whisper model"""
+        self.language = Config.TRANSCRIPTION_LANGUAGE
+
+    def _ensure_loaded(self):
+        """Load Whisper model on first use"""
+        if self.model is not None:
+            return
+
         print(f"Loading Whisper {self.model_size} model...")
         start_time = time.time()
         
@@ -65,7 +66,8 @@ class Transcriber:
         Returns:
             Dictionary with transcription and metadata
         """
-        
+        self._ensure_loaded()
+
         # Ensure float32 and correct range
         if audio_segment.dtype != np.float32:
             audio_segment = audio_segment.astype(np.float32)
@@ -353,7 +355,12 @@ class Transcriber:
             Formatted string
         """
         if format == 'txt':
-            output = self.get_full_transcription(segments, include_timestamps=True)
+            output = self.get_full_transcription(
+                segments,
+                include_timestamps=True,
+                include_speaker=True,
+                include_emotion=True
+            )
         
         elif format == 'srt':
             output = self._export_srt(segments)

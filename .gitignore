@@ -55,3 +55,5 @@ Thumbs.db
 # Data directories (optional - uncomment if needed)
 # data/uploads/
 # data/results/
+
+.claude/

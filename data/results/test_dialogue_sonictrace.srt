@@ -1,0 +1,59 @@
+1
+00:00:00,100 --> 00:00:01,399
+Good morning everyone.
+
+2
+00:00:01,700 --> 00:00:03,500
+Thank you for joining the call today.
+
+3
+00:00:04,400 --> 00:00:08,400
+I want to walk through the quarterly results and our plans for the next release.
+
+4
+00:00:09,900 --> 00:00:11,300
+Thanks for the introduction.
+
+5
+00:00:12,099 --> 00:00:13,099
+before we start.
+
+6
+00:00:13,400 --> 00:00:16,500
+Could you share the latest numbers from the marketing campaign?
+
+7
+00:00:17,199 --> 00:00:19,000
+I am really excited to see them.
+
+8
+00:00:20,399 --> 00:00:21,199
+Of course.
+
+9
+00:00:22,000 --> 00:00:28,100
+The campaign reached over 2 million people, and sign-up screw by 40% compared to last quarter.
+
+10
+00:00:29,600 --> 00:00:30,899
+That is wonderful news.
+
+11
+00:00:31,699 --> 00:00:36,399
+The team worked very hard on this, and I am proud of what we have accomplished together.
+
+12
+00:00:37,899 --> 00:00:38,700
+Absolutely.
+
+13
+00:00:39,500 --> 00:00:45,600
+Now, moving on to the product roadmap, we plan to ship the new dashboard by the end of next month.
+
+14
+00:00:47,100 --> 00:00:47,600
+great.
+
+15
+00:00:48,399 --> 00:00:54,200
+I will make sure the documentation is ready before the launch, and we can schedule a demo for the customers.
